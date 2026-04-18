@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color:white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/Cotorrisa_BG_Phone.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media (min-width: 768px) {
+    body {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/Cotorrisa_BG_PC.png');
+    }
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(20px, 3vw, 40px);
+    gap: clamp(30px, 5vw, 60px);
+    max-width: 100%;
+}
+
+.text-section {
+    flex: 0 1 auto;
+    z-index: 2;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1.5vw, 15px);
+    margin-bottom: clamp(10px, 1.5vw, 20px);
+    margin-left: clamp(-350px, -4vw, -50px);
+}
+
+.logo-img {
+    width: clamp(35px, 5vw, 60px);
+    height: clamp(35px, 5vw, 60px);
+    object-fit: contain;
+}
+
+.logo-container a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.logo-container a:hover {
+    transform: scale(1.05);
+}
+
+.subtitle {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2rem;
+    color: #4fc3f7;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7);
+}
+
+.title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: 1.3;
+    margin-bottom: clamp(15px, 2vw, 25px);
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+    color: #ffffff;
+}
+
+.description {
+    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+    line-height: 1.5;
+    color: #ffffff;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
+}
+
+.social-section {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(15px, 2vw, 25px);
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.social-btn {
+    width: clamp(70px, 11vw, 110px);
+    height: clamp(70px, 11vw, 110px);
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.social-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+}
+
+.social-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+    .social-section {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
