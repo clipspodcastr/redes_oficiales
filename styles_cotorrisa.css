@@ -20,18 +20,24 @@
     box-sizing: border-box;
 }
 
+/* Smooth scrolling for the entire page */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
-    color:white;
+    color: white;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
 
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/Cotorrisa_BG_Phone.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 @media (min-width: 768px) {
@@ -73,11 +79,12 @@ body {
     display: flex;
     align-items: center;
     text-decoration: none;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .logo-container a:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    filter: brightness(1.1);
 }
 
 .subtitle {
@@ -87,6 +94,16 @@ body {
     margin-bottom: 20px;
     letter-spacing: 3px;
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7), 0 0 5px rgba(79, 195, 247, 0.3);
+    }
+    to {
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7), 0 0 15px rgba(79, 195, 247, 0.6), 0 0 25px rgba(79, 195, 247, 0.4);
+    }
 }
 
 .title {
@@ -96,13 +113,26 @@ body {
     margin-bottom: clamp(15px, 2vw, 25px);
     text-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
     color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .description {
     font-size: clamp(0.95rem, 1.8vw, 1.2rem);
-    line-height: 1.5;
-    color: #ffffff;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
 .social-section {
@@ -111,6 +141,24 @@ body {
     gap: clamp(15px, 2vw, 25px);
     z-index: 2;
     flex-shrink: 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(79, 195, 247, 0.5) transparent;
+}
+
+.social-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.social-section::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.social-section::-webkit-scrollbar-thumb {
+    background-color: rgba(79, 195, 247, 0.5);
+    border-radius: 3px;
 }
 
 .social-btn {
@@ -122,13 +170,59 @@ body {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.8);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    border: 3px solid transparent;
+    animation: fadeInScale 0.5s ease-out both;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+    border-radius: 50%;
+}
+
+.social-btn:hover::before {
+    left: 100%;
+}
+
+/* Staggered animation delays for social buttons */
+.social-btn:nth-child(1) { animation-delay: 0.1s; }
+.social-btn:nth-child(2) { animation-delay: 0.2s; }
+.social-btn:nth-child(3) { animation-delay: 0.3s; }
+.social-btn:nth-child(4) { animation-delay: 0.4s; }
+.social-btn:nth-child(5) { animation-delay: 0.5s; }
+.social-btn:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .social-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+    transform: scale(1.12) translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 20px rgba(79, 195, 247, 0.4);
+    border-color: #4fc3f7;
+}
+
+.social-btn:active {
+    transform: scale(1.05);
 }
 
 .social-btn img {
@@ -136,17 +230,201 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+    transition: filter 0.3s ease;
 }
 
+.social-btn:hover img {
+    filter: brightness(1.05);
+}
+
+/* ===== FLOATING PARTICLES ===== */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, rgba(79, 195, 247, 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 15s infinite ease-in-out;
+}
+
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
+.particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 14s; }
+.particle:nth-child(3) { left: 35%; animation-delay: 4s; animation-duration: 16s; }
+.particle:nth-child(4) { left: 50%; animation-delay: 1s; animation-duration: 13s; }
+.particle:nth-child(5) { left: 65%; animation-delay: 3s; animation-duration: 15s; }
+.particle:nth-child(6) { left: 75%; animation-delay: 5s; animation-duration: 11s; }
+.particle:nth-child(7) { left: 85%; animation-delay: 2.5s; animation-duration: 17s; }
+.particle:nth-child(8) { left: 95%; animation-delay: 0.5s; animation-duration: 14s; }
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(80vh) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(10vh) scale(1);
+    }
+    100% {
+        transform: translateY(-10vh) scale(0);
+        opacity: 0;
+    }
+}
+
+/* ===== BUTTON LABELS ===== */
+.btn-label {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+}
+
+.social-btn:hover .btn-label {
+    opacity: 1;
+    bottom: -35px;
+}
+
+/* Hide the ::after tooltip since we now have .btn-label */
+.social-btn[aria-label]::after {
+    display: none;
+}
+
+/* ===== ENHANCED SOCIAL BUTTONS ===== */
+.social-btn {
+    position: relative;
+}
+
+.social-btn::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #4fc3f7, #00bcd4, #4fc3f7);
+    background-size: 200% 200%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: gradientRotate 3s linear infinite;
+}
+
+.social-btn:hover::after {
+    opacity: 1;
+}
+
+@keyframes gradientRotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ===== GLITCH EFFECT ON TITLE (subtle) ===== */
+.title {
+    position: relative;
+}
+
+.title:hover {
+    animation: glitch 0.3s ease;
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(2px, 2px); }
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
 @media (max-width: 900px) {
     .container {
         flex-direction: column;
         text-align: center;
-        justify-content: center;
+        justify-content: flex-start;
+        padding-top: clamp(30px, 5vh, 60px);
+        min-height: 100vh;
+        padding-bottom: 40px;
     }
+    
     .social-section {
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap;
+        max-height: none;
+        overflow-y: visible;
+        padding-bottom: 30px;
     }
+    
+    .btn-label {
+        display: none;
+    }
+    
+    .logo-container {
+        margin-left: 0;
+        justify-content: center;
+    }
+    
+    .particles {
+        display: none;
+    }
+}
+
+/* ===== LARGE SCREENS ===== */
+@media (min-width: 1400px) {
+    .social-btn {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .title {
+        font-size: 4.5rem;
+    }
+}
+
+/* ===== REDUCED MOTION FOR ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .particles {
+        display: none;
+    }
+}
+
+/* ===== FOCUS STATES FOR KEYBOARD NAVIGATION ===== */
+.social-btn:focus,
+.logo-container a:focus {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 4px;
+}
+
+/* ===== SELECTION STYLING ===== */
+::selection {
+    background: rgba(79, 195, 247, 0.5);
+    color: white;
 }
